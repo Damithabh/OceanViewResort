@@ -1,0 +1,417 @@
+/* 
+   ============================================================
+   Ocean View Resort — Premium Design System
+   Glassmorphism | Fluid Typography | Micro-interactions
+   
+   Font Stack: Outfit (headings), Inter (body text)
+   Color Palette: Deep Navy, Purple Accent, Cyan Highlights
+   ============================================================
+*/
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+/* ============================================================
+   CSS CUSTOM PROPERTIES (Design Tokens)
+   ============================================================ */
+:root {
+    --primary-color: #0A2540;
+    --secondary-color: #635BFF;
+    --accent-color: #00D4FF;
+    --success-color: #10B981;
+    --warning-color: #F59E0B;
+    --danger-color: #EF4444;
+
+    --bg-light: #F8FAFC;
+    --bg-white: #FFFFFF;
+    --text-main: #1E293B;
+    --text-muted: #64748B;
+    --border-light: #E2E8F0;
+
+    /* Glassmorphism tokens */
+    --glass-bg: rgba(255, 255, 255, 0.75);
+    --glass-border: rgba(255, 255, 255, 0.4);
+    --glass-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+    --glass-dark-bg: rgba(10, 37, 64, 0.65);
+    --glass-dark-border: rgba(255, 255, 255, 0.1);
+}
+
+/* ============================================================
+   BASE STYLES
+   ============================================================ */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-main);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6, .brand-font {
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: -0.02em;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* ============================================================
+   HERO BACKGROUND (Landing + Login Pages)
+   ============================================================ */
+.hero-bg {
+    background: linear-gradient(-45deg, var(--primary-color), var(--text-main));
+    background: url('https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&q=80&w=2000') no-repeat center center/cover;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.hero-bg::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(135deg, rgba(10, 37, 64, 0.8), rgba(99, 91, 255, 0.4));
+    z-index: 1;
+}
+
+.hero-bg > .container {
+    z-index: 2;
+    position: relative;
+}
+
+/* ============================================================
+   GLASSMORPHISM PANELS
+   ============================================================ */
+.glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    border-radius: 24px;
+    padding: 2.5rem;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-panel:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.glass-panel.dark {
+    background: var(--glass-dark-bg);
+    border: 1px solid var(--glass-dark-border);
+    color: white;
+}
+
+/* ============================================================
+   MICRO-ANIMATIONS
+   ============================================================ */
+@keyframes slideUpFade {
+    0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.98);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.animate-fade-in {
+    animation: slideUpFade 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Staggered entrance for child elements */
+.animate-fade-in > *:nth-child(1) { animation: slideUpFade 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both; }
+.animate-fade-in > *:nth-child(2) { animation: slideUpFade 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both; }
+.animate-fade-in > *:nth-child(3) { animation: slideUpFade 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both; }
+.animate-fade-in > *:nth-child(4) { animation: slideUpFade 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both; }
+.animate-fade-in > *:nth-child(5) { animation: slideUpFade 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.25s both; }
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn-antigravity {
+    background: linear-gradient(135deg, var(--secondary-color), #8A84FF);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 28px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 15px rgba(99, 91, 255, 0.3);
+    cursor: pointer;
+}
+
+.btn-antigravity:hover {
+    background: linear-gradient(135deg, #8A84FF, var(--secondary-color));
+    box-shadow: 0 8px 25px rgba(99, 91, 255, 0.5);
+    color: white;
+    transform: translateY(-3px) scale(1.02);
+}
+
+.btn-antigravity:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.btn-outline-antigravity {
+    background: transparent;
+    border: 2px solid var(--secondary-color);
+    color: var(--secondary-color);
+    border-radius: 12px;
+    font-weight: 600;
+    padding: 10px 24px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.btn-outline-antigravity:hover {
+    background: var(--secondary-color);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* ============================================================
+   SIDEBAR NAVIGATION
+   ============================================================ */
+.sidebar {
+    height: 100vh;
+    background: var(--primary-color);
+    color: white;
+    padding-top: 1.5rem;
+    position: fixed;
+    width: 260px;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.08);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-brand {
+    padding: 0 1.5rem 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 0.5rem;
+}
+
+.sidebar-nav {
+    flex: 1;
+    padding: 0;
+}
+
+.sidebar a {
+    color: rgba(255, 255, 255, 0.55);
+    text-decoration: none;
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    border-left: 4px solid transparent;
+}
+
+.sidebar a i {
+    width: 24px;
+    text-align: center;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+    color: white;
+    background: rgba(255, 255, 255, 0.08);
+    border-left: 4px solid var(--accent-color);
+    transform: translateX(4px);
+}
+
+.sidebar-footer {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ============================================================
+   MAIN CONTENT AREA
+   ============================================================ */
+.content-area {
+    margin-left: 260px;
+    padding: 2rem 2.5rem;
+    min-height: 100vh;
+    background: var(--bg-light);
+}
+
+/* ============================================================
+   CARDS
+   ============================================================ */
+.card {
+    border-radius: 16px;
+    border: 1px solid rgba(0, 0, 0, 0.04) !important;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03) !important;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    background: var(--bg-white);
+}
+
+.card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06) !important;
+    transform: translateY(-4px);
+}
+
+/* KPI Stat Cards */
+.kpi-card {
+    border-radius: 16px;
+    border: none !important;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.kpi-card::after {
+    content: '';
+    position: absolute;
+    top: -20px; right: -20px;
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* ============================================================
+   FORM CONTROLS
+   ============================================================ */
+.form-control,
+.form-select {
+    border-radius: 12px;
+    border: 1px solid var(--border-light);
+    padding: 14px;
+    background: var(--bg-light);
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+    background: white;
+    box-shadow: 0 0 0 4px rgba(99, 91, 255, 0.12);
+    border-color: var(--secondary-color);
+    outline: none;
+}
+
+.form-floating label {
+    padding-left: 14px;
+    color: var(--text-muted);
+}
+
+/* ============================================================
+   TABLE STYLES
+   ============================================================ */
+.table thead th {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    border-bottom: 2px solid var(--border-light);
+}
+
+.table tbody td {
+    vertical-align: middle;
+    padding: 1rem 0.75rem;
+}
+
+.table tbody tr {
+    transition: background 0.2s ease;
+}
+
+.table tbody tr:hover {
+    background: rgba(99, 91, 255, 0.03);
+}
+
+/* ============================================================
+   MODAL OVERRIDES
+   ============================================================ */
+.modal-content {
+    border-radius: 20px;
+    border: none;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+.modal-header {
+    border-bottom: 1px solid var(--border-light);
+    padding: 1.5rem 2rem;
+}
+
+.modal-body {
+    padding: 2rem;
+}
+
+.modal-footer {
+    border-top: 1px solid var(--border-light);
+    padding: 1rem 2rem;
+}
+
+/* ============================================================
+   BADGE OVERRIDES
+   ============================================================ */
+.badge {
+    font-weight: 600;
+    font-size: 0.75rem;
+    padding: 6px 12px;
+    border-radius: 8px;
+    letter-spacing: 0.02em;
+}
+
+/* ============================================================
+   RESERVATION CARDS
+   ============================================================ */
+.res-card {
+    transition: all 0.3s ease;
+    cursor: default;
+}
+
+.res-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* ============================================================
+   UTILITY CLASSES
+   ============================================================ */
+.text-gradient {
+    background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.border-accent {
+    border-color: var(--accent-color) !important;
+}
+
+/* ============================================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================================ */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+    .content-area {
+        margin-left: 0;
+        padding: 1.5rem;
+    }
+}
