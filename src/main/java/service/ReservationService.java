@@ -4,6 +4,7 @@ import dao.ReservationDAOImpl;
 import model.Reservation;
 import model.Room;
 import pattern.observer.AdminNotificationObserver;
+import pattern.observer.EmailNotificationObserver;
 import pattern.observer.LoggingObserver;
 import pattern.observer.ReservationObserver;
 import pattern.observer.ReservationSubject;
@@ -56,6 +57,7 @@ public class ReservationService implements ReservationSubject {
         this.observers = new ArrayList<>();
         addObserver(new AdminNotificationObserver());
         addObserver(new LoggingObserver());
+        addObserver(new EmailNotificationObserver());
     }
 
     // ============================
@@ -164,7 +166,7 @@ public class ReservationService implements ReservationSubject {
      * @param checkOutStr Check-out date string (yyyy-MM-dd)
      * @return true if the booking was successful
      */
-    public boolean bookRoom(int userId, int roomId, String guestName, String checkInStr, String checkOutStr) {
+    public boolean bookRoom(int userId, int roomId, String guestName, String guestEmail, String checkInStr, String checkOutStr) {
         LocalDate checkIn = LocalDate.parse(checkInStr);
         LocalDate checkOut = LocalDate.parse(checkOutStr);
 
@@ -201,6 +203,7 @@ public class ReservationService implements ReservationSubject {
                 .userId(userId)
                 .roomId(roomId)
                 .guestName(guestName)
+                .guestEmail(guestEmail)
                 .checkIn(checkIn)
                 .checkOut(checkOut)
                 .totalAmount(totalAmount)

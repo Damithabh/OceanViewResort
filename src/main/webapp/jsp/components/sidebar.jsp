@@ -38,6 +38,10 @@
                         class="${param.activePage == 'logs' ? 'active' : ''}">
                         <i class="fa-solid fa-clock-rotate-left me-2"></i>Audit Logs
                     </a>
+                    <a href="${pageContext.request.contextPath}/help"
+                        class="${param.activePage == 'help' ? 'active' : ''}">
+                        <i class="fa-solid fa-circle-question me-2 text-info"></i>Help / Guide
+                    </a>
                 </div>
 
                 <div class="sidebar-footer">

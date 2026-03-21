@@ -119,7 +119,7 @@ public class ReservationDAOImpl implements GenericDAO<Reservation> {
      */
     @Override
     public boolean create(Reservation r) {
-        String insertSql = "INSERT INTO reservations (reservation_number, user_id, room_id, guest_name, check_in, check_out, total_amount, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String insertSql = "INSERT INTO reservations (reservation_number, user_id, room_id, guest_name, guest_email, check_in, check_out, total_amount, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         String updateRoomSql = "UPDATE rooms SET status = 'OCCUPIED' WHERE id = ?";
 
         Connection conn = null;
@@ -133,10 +133,11 @@ public class ReservationDAOImpl implements GenericDAO<Reservation> {
                 stmt.setInt(2, r.getUserId());
                 stmt.setInt(3, r.getRoomId());
                 stmt.setString(4, r.getGuestName());
-                stmt.setDate(5, Date.valueOf(r.getCheckIn()));
-                stmt.setDate(6, Date.valueOf(r.getCheckOut()));
-                stmt.setBigDecimal(7, r.getTotalAmount());
-                stmt.setString(8, r.getStatus());
+                stmt.setString(5, r.getGuestEmail());
+                stmt.setDate(6, Date.valueOf(r.getCheckIn()));
+                stmt.setDate(7, Date.valueOf(r.getCheckOut()));
+                stmt.setBigDecimal(8, r.getTotalAmount());
+                stmt.setString(9, r.getStatus());
 
                 int affectedRows = stmt.executeUpdate();
                 if (affectedRows == 0) {
@@ -186,16 +187,17 @@ public class ReservationDAOImpl implements GenericDAO<Reservation> {
 
     @Override
     public boolean update(Reservation r) {
-        String sql = "UPDATE reservations SET guest_name = ?, check_in = ?, check_out = ?, total_amount = ?, status = ? WHERE id = ?";
+        String sql = "UPDATE reservations SET guest_name = ?, guest_email = ?, check_in = ?, check_out = ?, total_amount = ?, status = ? WHERE id = ?";
         try (Connection conn = DBConnectionPool.getInstance().getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
-
+ 
             stmt.setString(1, r.getGuestName());
-            stmt.setDate(2, Date.valueOf(r.getCheckIn()));
-            stmt.setDate(3, Date.valueOf(r.getCheckOut()));
-            stmt.setBigDecimal(4, r.getTotalAmount());
-            stmt.setString(5, r.getStatus());
-            stmt.setInt(6, r.getId());
+            stmt.setString(2, r.getGuestEmail());
+            stmt.setDate(3, Date.valueOf(r.getCheckIn()));
+            stmt.setDate(4, Date.valueOf(r.getCheckOut()));
+            stmt.setBigDecimal(5, r.getTotalAmount());
+            stmt.setString(6, r.getStatus());
+            stmt.setInt(7, r.getId());
 
             boolean success = stmt.executeUpdate() > 0;
             if (success) {
@@ -272,6 +274,7 @@ public class ReservationDAOImpl implements GenericDAO<Reservation> {
                 .userId(rs.getInt("user_id"))
                 .roomId(rs.getInt("room_id"))
                 .guestName(rs.getString("guest_name"))
+                .guestEmail(rs.getString("guest_email"))
                 .checkIn(rs.getDate("check_in").toLocalDate())
                 .checkOut(rs.getDate("check_out").toLocalDate())
                 .totalAmount(rs.getBigDecimal("total_amount"))

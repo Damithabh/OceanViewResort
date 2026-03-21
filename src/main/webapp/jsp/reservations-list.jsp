@@ -101,6 +101,9 @@
                                                 <div>
                                                     <span class="badge bg-primary mb-2">${res.reservationNumber}</span>
                                                     <h5 class="fw-bold mb-0">${res.guestName}</h5>
+                                                    <div class="text-muted small">
+                                                        <i class="fa-solid fa-envelope me-1"></i>${res.guestEmail}
+                                                    </div>
                                                 </div>
                                                 <c:choose>
                                                     <c:when test="${res.status == 'CONFIRMED'}">

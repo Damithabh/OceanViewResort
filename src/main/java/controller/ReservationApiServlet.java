@@ -117,10 +117,11 @@ public class ReservationApiServlet extends HttpServlet {
             int roomId = body.get("roomId") instanceof Number ? ((Number) body.get("roomId")).intValue()
                     : Integer.parseInt(String.valueOf(body.get("roomId")));
             String guestName = String.valueOf(body.get("guestName"));
+            String guestEmail = body.containsKey("guestEmail") ? String.valueOf(body.get("guestEmail")) : null;
             String checkIn = String.valueOf(body.get("checkIn"));
             String checkOut = String.valueOf(body.get("checkOut"));
 
-            boolean success = reservationService.bookRoom(userId, roomId, guestName, checkIn, checkOut);
+            boolean success = reservationService.bookRoom(userId, roomId, guestName, guestEmail, checkIn, checkOut);
 
             if (success) {
                 resp.setStatus(HttpServletResponse.SC_CREATED);

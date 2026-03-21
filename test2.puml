@@ -1,0 +1,128 @@
+﻿@startuml
+skinparam style strictuml
+skinparam ClassAttributeIconSize 0
+skinparam packageStyle rectangle
+skinparam roundcorner 5
+skinparam Linetype polyline
+
+title Ocean View Resort - Highly Advanced Architecture (Refined Degree-Level)
+
+package "com.oceanview.util" {
+    class DBConnection <<Singleton>> {
+        - {static} instance : DBConnection
+        - connection : Connection
+        - DBConnection()
+        + {static} getInstance() : DBConnection
+        + getConnection() : Connection
+        + close(Connection)
+    }
+
+    class PasswordUtil {
+        + {static} hashPassword(String) : String
+        + {static} checkPassword(String, String) : boolean
+    }
+}
+
+package "com.oceanview.model" {
+    enum Role {
+        USER
+        ADMIN
+        SUPERADMIN
+    }
+
+    class User {
+        - id : int
+        - username : String
+        - role : Role
+        + hasAdminAccess() : boolean
+        + isSuperAdmin() : boolean
+    }
+
+    class Room {
+        - id : int
+        - roomNumber : String
+        - roomType : String
+        - status : Status
+    }
+
+    class Reservation {
+        - id : int
+        - reservationNumber : String
+        - status : Status
+        --
+        + Reservation(Builder)
+    }
+
+    class "Reservation.Builder" as ReservationBuilder <<Pattern: Builder>> {
+        + build() : Reservation
+    }
+
+    class Payment {
+        - id : int
+        - amount : double
+        - status : PaymentStatus
+    }
+
+    User "1" -- "0..*" Reservation : initiates >
+    Reservation "1" -- "1" Room : assigned to >
+    Reservation "1" -- "1" Payment : billing >
+    Reservation +-- ReservationBuilder
+}
+
+package "com.oceanview.dao" {
+    interface BaseDAO<T> {
+        + findById(int) : T
+        + findAll() : List<T>
+        + insert(T) : boolean
+        + delete(int) : boolean
+    }
+
+    class UserDAO
+    class RoomDAO
+    class ReservationDAO
+    class PaymentDAO
+
+    UserDAO ..|> BaseDAO
+    RoomDAO ..|> BaseDAO
+    ReservationDAO ..|> BaseDAO
+    PaymentDAO ..|> BaseDAO
+}
+
+package "com.oceanview.service" {
+    class ReservationService <<Pattern: Facade>> {
+        - reservationDAO : ReservationDAO
+        - roomDAO : RoomDAO
+        - paymentDAO : PaymentDAO
+        + createReservation(User, Room, DateRange) : String
+        + processPayment(int, double) : boolean
+        + calculateTotalAmount(String, long) : double
+    }
+}
+
+package "com.oceanview.controller" {
+    abstract class HttpServlet <<Jakarta EE>>
+
+    class AuthServlet
+    class ReservationServlet
+    class RoomServlet
+    class UserManagementServlet
+
+    AuthServlet --|> HttpServlet
+    ReservationServlet --|> HttpServlet
+    RoomServlet --|> HttpServlet
+    UserManagementServlet --|> HttpServlet
+}
+
+' External Dependencies & Pattern Relationships
+DBConnection <.. BaseDAO : fetches connections from
+ReservationService --> ReservationDAO : persists via
+ReservationService --> RoomDAO
+ReservationService --> PaymentDAO
+
+ReservationServlet --> ReservationService : delegates to
+RoomServlet --> RoomDAO : interacts with
+
+note top of ReservationService : Facade pattern centralizes\ncomplex booking logic.
+note right of DBConnection : Singleton pattern ensures\none pool per JVM.
+note bottom of ReservationBuilder : Ensures object immutability\nand state validation.
+@enduml

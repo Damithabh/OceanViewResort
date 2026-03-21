@@ -99,11 +99,12 @@ public class ReservationServlet extends HttpServlet {
 
         String checkIn = req.getParameter("checkIn");
         String checkOut = req.getParameter("checkOut");
+        String guestEmail = req.getParameter("guestEmail");
         String roomIdStr = req.getParameter("roomId");
 
         try {
             int roomId = Integer.parseInt(roomIdStr);
-            boolean success = reservationService.bookRoom(user.getId(), roomId, guestName, checkIn, checkOut);
+            boolean success = reservationService.bookRoom(user.getId(), roomId, guestName, guestEmail, checkIn, checkOut);
 
             if (success) {
                 resp.sendRedirect(req.getContextPath() + "/manage-reservations?msg=created");

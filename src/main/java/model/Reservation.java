@@ -18,6 +18,7 @@ public class Reservation {
     private int userId;
     private int roomId;
     private String guestName;
+    private String guestEmail;
     private LocalDate checkIn;
     private LocalDate checkOut;
     private BigDecimal totalAmount;
@@ -39,6 +40,7 @@ public class Reservation {
         this.userId = builder.userId;
         this.roomId = builder.roomId;
         this.guestName = builder.guestName;
+        this.guestEmail = builder.guestEmail;
         this.checkIn = builder.checkIn;
         this.checkOut = builder.checkOut;
         this.totalAmount = builder.totalAmount;
@@ -93,6 +95,14 @@ public class Reservation {
 
     public void setGuestName(String guestName) {
         this.guestName = guestName;
+    }
+
+    public String getGuestEmail() {
+        return guestEmail;
+    }
+
+    public void setGuestEmail(String guestEmail) {
+        this.guestEmail = guestEmail;
     }
 
     public LocalDate getCheckIn() {
@@ -161,7 +171,7 @@ public class Reservation {
 
     @Override
     public String toString() {
-        return "Reservation{id=" + id + ", number='" + reservationNumber + "', guest='" + guestName + "', status='"
+        return "Reservation{id=" + id + ", number='" + reservationNumber + "', guest='" + guestName + "', email='" + guestEmail + "', status='"
                 + status + "'}";
     }
 
@@ -180,6 +190,7 @@ public class Reservation {
         private int userId;
         private int roomId;
         private String guestName;
+        private String guestEmail;
         private LocalDate checkIn;
         private LocalDate checkOut;
         private BigDecimal totalAmount;
@@ -211,6 +222,11 @@ public class Reservation {
 
         public ReservationBuilder guestName(String name) {
             this.guestName = name;
+            return this;
+        }
+
+        public ReservationBuilder guestEmail(String email) {
+            this.guestEmail = email;
             return this;
         }
 

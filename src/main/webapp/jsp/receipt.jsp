@@ -146,7 +146,7 @@
                         <!-- Total Amount -->
                         <div class="receipt-total text-center">
                             <small class="text-muted d-block mb-1">TOTAL AMOUNT</small>
-                            <h2 class="fw-bold text-gradient mb-0">$${reservation.totalAmount}</h2>
+                            <h2 class="fw-bold  mb-0">$${reservation.totalAmount}</h2>
                         </div>
 
                         <div class="text-center mt-4 text-muted small">

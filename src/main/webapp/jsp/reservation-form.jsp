@@ -46,7 +46,17 @@
                                                 <i class="fa-solid fa-user me-1"></i>Guest Full Name
                                             </label>
                                             <input type="text" class="form-control" id="guestName" name="guestName"
-                                                placeholder="e.g. John Smith" required minlength="2" maxlength="100">
+                                                placeholder="e.g. John Smith" required maxlength="100">
+                                        </div>
+ 
+                                        <!-- Guest Email -->
+                                        <div class="mb-3">
+                                            <label for="guestEmail" class="form-label fw-bold">
+                                                <i class="fa-solid fa-envelope me-1"></i>Guest Email Address
+                                            </label>
+                                            <input type="email" class="form-control" id="guestEmail" name="guestEmail"
+                                                placeholder="e.g. john@example.com" required maxlength="100">
+                                            <div class="form-text small">We'll send a welcome email to this address.</div>
                                         </div>
 
                                         <!-- Room Selection -->
